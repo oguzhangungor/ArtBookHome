@@ -31,21 +31,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        listView=findViewById(R.id.listArt);
+        listView = findViewById(R.id.listArt);
 
-        nameArray= new ArrayList<>();
-        idArray= new ArrayList<>();
+        nameArray = new ArrayList<>();
+        idArray = new ArrayList<>();
 
-        arrayAdapter= new ArrayAdapter(MainActivity.this,android.R.layout.simple_list_item_1,nameArray);
+        arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, nameArray);
         listView.setAdapter(arrayAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                Intent intent=new Intent(MainActivity.this,MainActivity2.class);
-                intent.putExtra("artId",idArray.get(i));
-                intent.putExtra("info","old");
+                Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+                intent.putExtra("artId", idArray.get(i));
+                intent.putExtra("info", "old");
                 startActivity(intent);
 
             }
@@ -55,16 +55,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-    public void getData(){
+    public void getData() {
 
         try {
-            SQLiteDatabase database= this.openOrCreateDatabase("Arts",MODE_PRIVATE,null);
-            Cursor cursor =database.rawQuery("select * from arts",null);
-            int nameIx=cursor.getColumnIndex("artname");
-            int idIx=cursor.getColumnIndex("id");
+            SQLiteDatabase database = this.openOrCreateDatabase("Arts", MODE_PRIVATE, null);
+            Cursor cursor = database.rawQuery("select * from arts", null);
+            int nameIx = cursor.getColumnIndex("artname");
+            int idIx = cursor.getColumnIndex("id");
 
-            while (cursor.moveToNext()){
+            while (cursor.moveToNext()) {
                 nameArray.add(cursor.getString(nameIx));
                 idArray.add(cursor.getInt(idIx));
 
@@ -72,9 +71,7 @@ public class MainActivity extends AppCompatActivity {
             arrayAdapter.notifyDataSetChanged();
 
             cursor.close();
-        }
-
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
